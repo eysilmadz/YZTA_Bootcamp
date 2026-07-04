@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: ai_hire_coach_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/workspace
+    env_file:
+      - .env
+    environment:
+      - WATCHFILES_FORCE_POLLING=true
