@@ -1,12 +1,24 @@
 
+# Ortam değişkenleri — asla commit etme
 .env
 
+# SQLite local veritabanı
+*.db
+*.sqlite
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
 .pytest_cache/
-venv/
+
+# Virtual environment
 .venv/
+venv/
 env/
+
+# Alembic
+alembic/versions/*.pyc
 
 # Docker ve Sistem Dosyaları
 .DS_Store
