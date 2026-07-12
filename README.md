@@ -147,12 +147,56 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
 </details>  
 </details>
 
-<!--
+
 <details>
-<summary><b>Sprint 2</b></summary>
-<br>
-<i>Bu sprint henüz başlamadı.</i>
+  <summary><b>Sprint 2</b></summary>
+
+  ### 📌 Sprint Goals
+  Our main objective in Sprint 2 ("Building the Core Components") is to transition from architectural design to active implementation. This includes developing the local CV parsing mechanisms, setting up the multi-agent code structure, creating the initial API endpoints, implementing the PostgreSQL database schema with SQLAlchemy ORM, and building the functional frontend upload interface.
+
+  ### Backlog Structure & Story Selection
+  Following our initial architectural alignment, the Product Backlog was expanded for Sprint 2. User Stories were prioritized based on core functionality implementation and technical dependencies:
+  * **Story 1 (CV Ingestion & Parsing Pipeline):** As a user, I want to upload my PDF resume so that the system can automatically extract my tech stack and years of experience using local NLP processors.
+  * **Story 2 (Database & Persistence Layer):** As a system, I want to store users, interview sessions, and messages in a structured database so that we can support active session states and historical logging. 
+  * **Story 3 (Multi-Agent Foundation & API Layer):** As a developer, I want to establish the basic agent orchestration skeleton and backend entry points so that components can communicate reliably. 
+
+  ### Daily Scrum & Synchronization
+  * **Meeting Frequency:** During Sprint 2, the team synchronized once a week via structured meetings over **Slack** to assess progress, align on current tasks, and discuss integration strategies.
+  * **Current Status & Blocker Resolution:** * **Esma Yıldız** (Scrum Master) and **Nur Sima Akgül** (Product Owner) successfully completed all of their designated sprint tasks. 
+    * **Esra Bayrakcı** (Developer) has initialized her tasks, but they require further development and integration. Due to outstanding dependencies, these specific tasks have been carried forward as **In Progress** to ensure thorough implementation and robust API safety controls.
+
+  ### Sprint Tasks & Status Table
+
+  | Field of Work | Task | Assignee | Status |
+  | :--- | :--- | :--- | :--- |
+  | **Project Management** | Organizing the Sprint Review and updating the product backlog for Sprint 3 | Esma Yıldız | ✅ Done |
+  | **Frontend** | Bringing the UI to life by coding the functional CV upload screen | Esma Yıldız | ✅ Done |
+  | **Database & Memory** | Writing SQLAlchemy ORM models, running migrations, and implementing basic CRUD functions | Nur Sima Akgül | ✅ Done |
+  | **CV Analysis & NLP** | Developing competency/tech stack extraction (keyword + NLP) and years of experience logic | Esra Bayrakcı | ⏳ In Progress |
+  | **Multi-Agent** | Coding the base agent skeleton with CrewAI/LangChain and performing initial prompt trials | Esra Bayrakcı | ⏳ In Progress |
+  | **Backend API** | Building the CV upload endpoint (`/upload-cv`) and implementing basic file validation checks | Esra Bayrakcı | ⏳ In Progress |
+
+  <details>
+    <summary><h3>Sprint 2 - Trello Screenshots</h3></summary>
+    <img src="./assets/trello_sprint2.png" style="max-width: 100%; height: auto;" alt="Sprint 2 Trello Board Status">
+  </details>
+
+  ### Sprint Notes:
+  * Database schema definitions were successfully mapped to relational models utilizing `SQLAlchemy`, paving the way for data isolation per session.
+  * The frontend team converted the static wireframes into a fully functional user interface for handling document uploads.
+  * While backend models and UI are structurally ready, the NLP algorithms and agent boundaries are currently being refined in the local dev environment.
+
+  ### Sprint Review
+  During Sprint 2, the database foundation was successfully stabilized, and the user-facing upload layout was completed. The core data models can now natively handle User, Session, and Message flows. However, since the NLP engine and the multi-agent code skeleton are still in progress, the complete end-to-end local CV parsing cycle will be finalized at the start of the next cycle.
+
+  ### Sprint Retro
+  * **What Went Well:** The database abstraction layer was completed very cleanly using SQLAlchemy, making future CRUD work effortless. Team communication via Slack remained highly structured and effective.
+  * **What Can Be Improved:** Having a single developer own the NLP extraction, Agent setup, *and* API endpoint creation simultaneously created a high-density workload bottleneck.
+  * **Action Plan:** In Sprint 3, the Scrum Master and Product Owner will assist closely with backend testing and endpoint verification. We will focus immediately on finalizing the ongoing AI agent connectivity and spinning up the interview flow simulator.
+
 </details>
+
+<!--
 
 <details>
 <summary><b>🔒 Sprint 3</b></summary>
