@@ -162,9 +162,9 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
   * **Story 4 (Automated AI Reporting & Exporting Engine):** As an HR manager/Candidate, I want to view structured feedback regarding my strengths, improvements, and personalized study roadmaps with the ability to export the report as a PDF.
 
   ### Daily Scrum & Synchronization
-  * **Meeting Frequency:** Throughout Sprint 2, the team synchronized once a week via structured meetings over **Slack** to assess blocker tickets, manage task distributions, and establish API specs.
-  * **Current Status & Blocker Resolution:** * **Esma Yıldız** (Scrum Master) and **Nur Sima Akgül** (Product Owner) successfully completed all of their designated sprint tasks, including advanced routing logic, dynamic dashboard features, evaluation screen developments, and relational migration execution.
-    * **Esra Bayrakcı** (Developer) has initialized her multi-agent foundations, API structures, and core parser logic. Due to intense complexity across LLM rate limit safety boundaries, her core tasks are remaining **In Progress** to ensure optimal safety controls in Sprint 3.
+  * **Meeting Frequency:** Throughout Sprint 2, the team synchronized once a week via structured meetings over **Slack** to assess blocker tickets, manage task distributions, and establish API specs[cite: 2, 43, 196].
+  * **Current Status & Blocker Resolution:** * **Esma Yıldız** (Scrum Master) and **Nur Sima Akgül** (Product Owner) successfully completed all of their designated sprint tasks, including advanced routing logic, dynamic dashboard features, evaluation screen developments, and relational migration execution[cite: 3, 43, 196].
+    * **Esra Bayrakcı** (Developer) successfully delivered the core infrastructure of the backend, finalizing the local CV NLP parsing mechanism, the base multi-agent structures, and the initial file upload endpoints. However, due to complex dependency loops and LLM rate limit safety boundaries, her runtime simulation, scoring prompt tuning, and reporting lifecycle endpoints remain **In Progress** and will be prioritized in the next sprint[cite: 43, 196].
 
   ### Sprint Tasks & Status Table
 
@@ -186,7 +186,7 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
   | **Evaluation Agent** | Designing scoring weights and prompt matrix configurations to detect technical gaps | Esra Bayrakcı | ⏳ In Progress |
   | **Evaluation Agent** | Mapping AI reporting configurations to output structured blocks (scores, strengths, improvements) | Esra Bayrakcı | ⏳ In Progress |
   | **Backend API** | Creating the reporting route (`/interview/report`) and developing PDF/HTML rendering modules | Esra Bayrakcı | ⏳ In Progress |
-  | **Integration** | Executing full End-to-End connectivity checks: Combining CV Ingestion ➡️ Chat ➡️ Report chain | **Everyone Together** | ⏳ In Progress |
+  | **Integration** | Executing full End-to-End connectivity checks: Combining CV Ingestion ➡️ Chat ➡️ Report chain | **Everyone Together** 🤝 | ⏳ In Progress |
 
   <details>
     <summary><h3>Sprint 2 - Trello Screenshots</h3></summary>
@@ -199,11 +199,11 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
   * The frontend application layout has been upgraded to an immersive English environment, following global SaaS development guidelines.
 
   ### Sprint Review
-  Sprint 2 achieved significant milestones regarding UI presentation layers and relational schema integrity. The application now boasts fully modeled tracking layers for Users, Sessions, Messages, and Reports on PostgreSQL alongside functional, state-driven user screens for Uploads, live terminal interview layouts, and metric scorecards. Since backend agent orchestration, live streaming endpoints, and final pipeline integrations are actively progressing in local developer branches, the full end-to-end operational code cycle will lock down in the initial phase of the upcoming cycle.
+  Sprint 2 achieved significant milestones regarding core feature delivery. The implementation layer successfully stabilized the database persistence models on PostgreSQL alongside operational local NLP parsing engines and basic multi-agent communication scaffolds on the backend. Concurrently, the frontend presentation layers for the Dashboard, Live split-screen workspace, and localized Evaluation layouts are fully functional. The remaining live orchestration logic, simulation endpoints, and uçtan uca pipeline entegrasyonu checks will lock down immediately in the next deployment cycle.
 
   ### Sprint Retro
-  * **What Went Well:** The state abstraction and layout structure on the React application were flawlessly engineered, delivering crisp transitions between dashboards and workspaces. Relational DB models were completed neatly with SQLAlchemy.
-  * **What Can Be Improved:** Treating complex LLM prompting, rate limit structures, live streaming endpoints, and data parsing as individual asynchronous targets for a single developer created an operational development bottleneck.
+  * **What Went Well:** The local parsing pipeline and SQLAlchemy DB operations were finalized smoothly. The frontend application successfully built highly modular workspace panels with clean state management transitions.
+  * **What Can Be Improved:** Treating complex live LLM response cycles, dynamic caching layers, and cross-agent evaluation report metrics as simultaneous targets for the developer backend workflow created an integration bottleneck.
   * **Action Plan (Next Sprint Tasks):**
     * **Multi-Agent Optimization:** Refine and align agent prompts to ensure more stable, accurate questions and higher quality evaluation report generations.
     * **Cost Reduction & Caching (Backend API):** Optimize token spending and prevent hitting free tier API rate limits by decreasing request sizes (short prompts) and establishing a basic caching layer.
@@ -211,7 +211,7 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
     * **UI/UX Polishing (Frontend):** Beautify UI components, resolve visual layouts, and ensure full responsive compatibility for mobile devices.
     * **Comprehensive Multi-CV Testing (QA):** Launch comprehensive bug hunting cycles using various resumes with distinct tech stacks to test the parsing pipeline from scratch, rank issues, and fix edge-case breaks.
     * **DevOps Deployment Pipeline:** Deploy the finalized backend and frontend instances into free cloud hosting providers while securely configuring environment variables (`.env`). Establish automatic pipelines via GitHub Actions (CI/CD).
-    * **Final Deliverables & Review:** Coordinate a comprehensive internal live demo, compose a concise technical README/user manual documentation, and finalize the lifecycle with an team retro discussion.
+    * **Final Deliverables & Review:** Coordinate a comprehensive internal live demo, compose a concise technical README/user manual documentation, and finalize the lifecycle with a team retro discussion.
 
 </details>
 
