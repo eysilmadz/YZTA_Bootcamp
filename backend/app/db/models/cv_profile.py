@@ -26,12 +26,16 @@ class CVProfile(Base):
     __tablename__ = "cv_profiles"
 
     id = Column(Integer, primary_key=True, index=True)
-    session_id = Column(Integer, ForeignKey("interview_sessions.id"), unique=True, nullable=False)
+    session_id = Column(Integer, ForeignKey("interview_sessions.id"), unique=True, nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
 
     level = Column(String, nullable=True)              # "Junior" / "Mid" / "Senior"
     tech_stack = Column(JSON, nullable=True)           # yukarıdaki örnek yapı
     strengths_weaknesses = Column(JSON, nullable=True) # yukarıdaki örnek yapı
     raw_analysis = Column(String, nullable=True)       # ajanın tam metin ham çıktısı
+    europass_data = Column(JSON, nullable=True)        # europass cv formatı detayları
+
 
     # İlişkiler
     session = relationship("InterviewSession", back_populates="cv_profile")
+    user = relationship("User", backref="cv_profiles")

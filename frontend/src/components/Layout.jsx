@@ -32,10 +32,13 @@ const Layout = () => {
               <MessageSquare size={16} />
               Live Interview
             </Link>
-            <button className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-full text-sm font-medium transition-all duration-200">
+            <Link 
+              to="/evaluation"
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${location.pathname === '/evaluation' ? 'bg-white/5 text-white' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+            >
               <BarChart size={16} />
               Evaluation
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -46,10 +49,29 @@ const Layout = () => {
           <button className="text-gray-400 hover:text-white p-2 hover:bg-white/5 rounded-full transition-all duration-200">
             <Bell size={20} />
           </button>
-          <button className="w-9 h-9 rounded-full bg-teal-500 text-white font-semibold text-sm flex items-center justify-center hover:ring-2 hover:ring-teal-500/50 transition-all duration-200">
-            AD
-          </button>
+          {(() => {
+            const userStr = localStorage.getItem("candidate_user");
+            const user = userStr ? JSON.parse(userStr) : null;
+            const initials = user && user.name 
+              ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() 
+              : 'AX';
+            const profilePic = user ? user.profile_picture : null;
+            
+            return (
+              <Link 
+                to="/profile" 
+                className="w-9 h-9 rounded-full bg-purple-600 text-white font-semibold text-sm flex items-center justify-center hover:ring-2 hover:ring-purple-500/50 transition-all duration-200 overflow-hidden"
+              >
+                {profilePic ? (
+                  <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  initials
+                )}
+              </Link>
+            );
+          })()}
         </div>
+
       </nav>
 
       {/* Main Content Area */}
