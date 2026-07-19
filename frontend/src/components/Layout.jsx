@@ -32,10 +32,13 @@ const Layout = () => {
               <MessageSquare size={16} />
               Live Interview
             </Link>
-            <button className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-full text-sm font-medium transition-all duration-200">
+            <Link 
+              to="/evaluation"
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${location.pathname === '/evaluation' ? 'bg-white/5 text-white' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+            >
               <BarChart size={16} />
               Evaluation
-            </button>
+            </Link>
           </div>
         </div>
 
