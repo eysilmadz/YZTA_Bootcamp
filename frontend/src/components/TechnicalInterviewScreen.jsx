@@ -120,12 +120,12 @@ const TechnicalInterviewScreen = () => {
 
     try {
       // 1. Fetch user's CV list
-      const cvsResponse = await fetch(`http://127.0.0.1:8000/api/v1/user/${userObj.id}/cvs`);
+      const cvsResponse = await fetch(`https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/${userObj.id}/cvs`);
       if (cvsResponse.ok) {
         const cvsList = await cvsResponse.json();
         if (cvsList && cvsList.length > 0) {
           // 2. Start session using latest CV profile
-          const startSessionResponse = await fetch("http://127.0.0.1:8000/api/v1/interview/new-from-existing", {
+          const startSessionResponse = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/new-from-existing", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
@@ -180,7 +180,7 @@ const TechnicalInterviewScreen = () => {
   const fetchSessionDetails = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/v1/interview/session/${sessionId}`);
+      const response = await fetch(`https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/session/${sessionId}`);
       if (!response.ok) {
         throw new Error("Mülakat oturum detayları yüklenemedi.");
       }
@@ -212,7 +212,7 @@ const TechnicalInterviewScreen = () => {
 
   const startInterview = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/interview/start", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ session_id: parseInt(sessionId) }),
@@ -260,7 +260,7 @@ const TechnicalInterviewScreen = () => {
     setMessages(prev => [...prev, { role: "candidate", content: "Bu soruyu atlıyorum." }]);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/interview/answer", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -302,7 +302,7 @@ const TechnicalInterviewScreen = () => {
     const finalAnswer = accumulatedAnswer || "Evet, bir sonraki soruya geçelim.";
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/interview/answer", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -356,7 +356,7 @@ const TechnicalInterviewScreen = () => {
     setMessages(prev => [...prev, { role: "candidate", content: "Evet, başlayalım." }]);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/interview/answer", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -381,7 +381,7 @@ const TechnicalInterviewScreen = () => {
   const handleEndInterview = async () => {
     setIsEnding(true);
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/interview/end", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/end", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ session_id: parseInt(sessionId) }),
@@ -761,7 +761,7 @@ const TechnicalInterviewScreen = () => {
             {/* Download/Export Buttons */}
             <div className="flex gap-4">
               <a 
-                href={`http://127.0.0.1:8000/api/v1/interview/report/${sessionId}?format=pdf`} 
+                href={`https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/report/${sessionId}?format=pdf`} 
                 download
                 className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs font-semibold text-white transition-colors"
               >
@@ -769,7 +769,7 @@ const TechnicalInterviewScreen = () => {
                 PDF Raporu İndir
               </a>
               <a 
-                href={`http://127.0.0.1:8000/api/v1/interview/report/${sessionId}?format=html`} 
+                href={`https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/report/${sessionId}?format=html`} 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#1f2937] hover:bg-[#374151] rounded-xl text-xs font-semibold text-gray-300 transition-colors border border-gray-700"

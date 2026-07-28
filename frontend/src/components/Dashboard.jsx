@@ -45,7 +45,7 @@ const Dashboard = () => {
 
   const loadUserProfileData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/v1/user/profile?email=${encodeURIComponent(user.email)}`);
+      const response = await fetch(`https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/profile?email=${encodeURIComponent(user.email)}`);
       if (response.ok) {
         const data = await response.json();
         if (data.exists) {
@@ -117,7 +117,7 @@ const Dashboard = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/upload-cv", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/upload-cv", {
         method: "POST",
         body: formData,
       });
@@ -156,7 +156,7 @@ const Dashboard = () => {
     setErrorMessage('');
     try {
       const cvProfileId = typeof cvId === 'string' ? parseInt(cvId) : cvId;
-      const response = await fetch("http://127.0.0.1:8000/api/v1/interview/new-from-existing", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/interview/new-from-existing", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -454,4 +454,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-export { Dashboard };

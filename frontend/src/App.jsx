@@ -1,10 +1,22 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { store } from './app/store';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import TechnicalInterviewScreen from './components/TechnicalInterviewScreen';
+import Login from './components/Login';
+
+const ProtectedRoute = ({ children }) => {
+  const user = localStorage.getItem("candidate_user");
+  const location = useLocation();
+
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
 
 function App() {
   return (

@@ -26,8 +26,8 @@ const Login = () => {
     setIsLoading(true);
 
     const url = isLogin 
-      ? "http://127.0.0.1:8000/api/v1/auth/login" 
-      : "http://127.0.0.1:8000/api/v1/auth/signup";
+      ? "https://yzta-bootcamp-ttfy.onrender.com/api/v1/auth/login" 
+      : "https://yzta-bootcamp-ttfy.onrender.com/api/v1/auth/signup";
 
     const payload = isLogin
       ? { email, password }

@@ -83,7 +83,7 @@ const Profile = () => {
   const loadUserProfile = async () => {
     setErrorMessage('');
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/v1/user/profile?email=${encodeURIComponent(initialUser.email)}`);
+      const response = await fetch(`https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/profile?email=${encodeURIComponent(initialUser.email)}`);
       if (response.ok) {
         const data = await response.json();
         if (data.exists) {
@@ -139,7 +139,7 @@ const Profile = () => {
 
   const updateProfilePhoto = async (base64Str) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/user/settings", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -174,7 +174,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/user/settings", {
+      const response = await fetch("https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -323,11 +323,11 @@ const Profile = () => {
     };
 
     try {
-      let url = "http://127.0.0.1:8000/api/v1/user/cv/create";
+      let url = "https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/cv/create";
       let method = "POST";
 
       if (cvId) {
-        url = `http://127.0.0.1:8000/api/v1/user/cv/${cvId}`;
+        url = `https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/cv/${cvId}`;
         method = "PUT";
       }
 
@@ -525,7 +525,7 @@ const Profile = () => {
               <div className="flex gap-3 w-full md:w-auto">
                 {cvId && (
                   <a 
-                    href={`http://127.0.0.1:8000/api/v1/user/cv/export-pdf?email=${encodeURIComponent(initialUser.email)}`}
+                    href={`https://yzta-bootcamp-ttfy.onrender.com/api/v1/user/cv/export-pdf?email=${encodeURIComponent(initialUser.email)}`}
                     download
                     className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-xs font-semibold border border-gray-700 transition-all cursor-pointer"
                   >

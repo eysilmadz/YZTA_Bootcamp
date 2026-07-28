@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="271e03c4-f0f3-435b-83a8-b6ce63a7d3d4" name="Changes" comment="" />
+    <list default="true" id="271e03c4-f0f3-435b-83a8-b6ce63a7d3d4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +50,19 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="backend" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="backend" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -70,6 +85,9 @@
       <workItem from="1785183589216" duration="20000" />
       <workItem from="1785183612293" duration="127000" />
       <workItem from="1785183746856" duration="261000" />
+      <workItem from="1785184011360" duration="604000" />
+      <workItem from="1785184622031" duration="74000" />
+      <workItem from="1785184707010" duration="83000" />
     </task>
     <servers />
   </component>
