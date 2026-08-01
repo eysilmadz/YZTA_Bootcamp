@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { 
   Download, 
   RotateCcw, 
@@ -32,18 +32,43 @@ const EvaluationScreen = () => {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [noSession, setNoSession] = useState(false);
+  const [activeSessionId, setActiveSessionId] = useState(sessionId);
 
   useEffect(() => {
     const fetchReport = async () => {
-      if (!sessionId) {
-        setError('No session ID provided in the URL. Please provide ?session_id=...');
-        setLoading(false);
-        return;
-      }
-
       try {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-        const response = await fetch(`${apiUrl}/api/v1/interview/report/${sessionId}`);
+        let targetSessionId = sessionId;
+
+        // If no sessionId in URL, try to get the latest one for the user
+        if (!targetSessionId) {
+          const userStr = localStorage.getItem("candidate_user");
+          if (userStr) {
+            const user = JSON.parse(userStr);
+            if (user.email) {
+              const profileRes = await fetch(`${apiUrl}/api/v1/user/profile?email=${user.email}`);
+              if (profileRes.ok) {
+                const profileData = await profileRes.json();
+                if (profileData.latest_session_id) {
+                  targetSessionId = profileData.latest_session_id;
+                }
+              }
+            }
+          }
+        }
+
+        // If still no targetSessionId, it means user has no past sessions
+        if (!targetSessionId) {
+          setNoSession(true);
+          setLoading(false);
+          return;
+        }
+
+        setActiveSessionId(targetSessionId);
+
+        // Fetch the report for the targetSessionId
+        const response = await fetch(`${apiUrl}/api/v1/interview/report/${targetSessionId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch evaluation report');
         }
@@ -67,6 +92,26 @@ const EvaluationScreen = () => {
           <Loader2 className="animate-spin text-blue-500" size={48} />
           <p className="text-gray-400 font-medium text-sm">Analyzing interview performance...</p>
         </div>
+      </div>
+    );
+  }
+
+  if (noSession) {
+    return (
+      <div className="min-h-full flex flex-col items-center justify-center p-6 py-24 space-y-4">
+        <div className="p-4 bg-blue-500/10 rounded-full text-blue-400 mb-2">
+          <BookOpen size={48} />
+        </div>
+        <h2 className="text-xl font-bold text-white text-center">Henüz tamamlanmış bir mülakatınız bulunmuyor.</h2>
+        <p className="text-gray-400 text-sm text-center max-w-md">
+          Mülakat pratiği yapmak ve performansınızı görmek için yeni bir canlı mülakat başlatabilirsiniz.
+        </p>
+        <Link 
+          to="/"
+          className="mt-6 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center gap-2"
+        >
+          Go to Dashboard <ArrowRight size={16} />
+        </Link>
       </div>
     );
   }
@@ -111,7 +156,7 @@ const EvaluationScreen = () => {
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-medium border border-emerald-500/20 text-xs">
               <Award size={14} /> Completed
             </span>
-            <span className="text-gray-400 text-xs font-medium">Session ID: {sessionId.substring(0, 8)}...</span>
+            <span className="text-gray-400 text-xs font-medium">Session ID: {activeSessionId ? activeSessionId.substring(0, 8) + '...' : ''}</span>
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight">Performance Evaluation</h1>
         </div>
