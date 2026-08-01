@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import TechnicalInterviewScreen from './components/TechnicalInterviewScreen';
 import Login from './components/Login';
+import EvaluationScreen from './components/EvaluationScreen';
 
 const ProtectedRoute = ({ children }) => {
   const user = localStorage.getItem("candidate_user");
@@ -37,6 +38,7 @@ function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path="interview" element={<TechnicalInterviewScreen />} />
+            <Route path="evaluation" element={<EvaluationScreen />} />
           </Route>
 
           {/* Fallback redirect */}
