@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
   Download, 
   RotateCcw, 
@@ -8,7 +9,8 @@ import {
   AlertTriangle, 
   Circle, 
   BookOpen, 
-  ArrowRight 
+  ArrowRight,
+  Loader2
 } from 'lucide-react';
 
 const SkillBar = ({ title, score, color }) => (
@@ -24,6 +26,81 @@ const SkillBar = ({ title, score, color }) => (
 );
 
 const EvaluationScreen = () => {
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get('session_id');
+
+  const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchReport = async () => {
+      if (!sessionId) {
+        setError('No session ID provided in the URL. Please provide ?session_id=...');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${apiUrl}/api/v1/interview/report/${sessionId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch evaluation report');
+        }
+        const data = await response.json();
+        setReport(data);
+      } catch (err) {
+        console.error(err);
+        setError('Could not load the evaluation report. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReport();
+  }, [sessionId]);
+
+  if (loading) {
+    return (
+      <div className="min-h-full flex items-center justify-center p-6 py-24">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="animate-spin text-blue-500" size={48} />
+          <p className="text-gray-400 font-medium text-sm">Analyzing interview performance...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-full flex flex-col items-center justify-center p-6 py-24 space-y-4">
+        <AlertTriangle size={48} className="text-red-500" />
+        <h2 className="text-xl font-bold text-white">Oops, something went wrong!</h2>
+        <p className="text-gray-400">{error}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="mt-4 px-4 py-2 bg-[#111827] border border-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  if (!report) return null;
+
+  const overallScore = Math.round(report.overall_score || 0);
+  const isStrongHire = overallScore >= 75;
+  const hireSignalText = isStrongHire ? "Strong Hire Signal" : (overallScore >= 50 ? "Average Performance" : "Needs Improvement");
+  const hireSignalColor = isStrongHire ? "bg-blue-500/10 text-blue-400 border-blue-500/20" : 
+                          (overallScore >= 50 ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" : "bg-red-500/10 text-red-400 border-red-500/20");
+  const chartStrokeColor = isStrongHire ? "#3b82f6" : (overallScore >= 50 ? "#eab308" : "#ef4444");
+
+  const categoryScores = report.category_scores || {};
+  const strongAreas = report.full_report?.strong_areas || [];
+  const improvementAreas = report.full_report?.improvement_areas || [];
+  const recommendations = report.full_report?.recommendations || [];
+
   return (
     <div className="min-h-full p-6 md:p-8 max-w-[1400px] mx-auto space-y-6">
       
@@ -34,7 +111,7 @@ const EvaluationScreen = () => {
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-medium border border-emerald-500/20 text-xs">
               <Award size={14} /> Completed
             </span>
-            <span className="text-gray-400 text-xs font-medium">Senior Frontend Engineer · Today, 14:32</span>
+            <span className="text-gray-400 text-xs font-medium">Session ID: {sessionId.substring(0, 8)}...</span>
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight">Performance Evaluation</h1>
         </div>
@@ -67,16 +144,16 @@ const EvaluationScreen = () => {
                   <circle 
                     cx="50" cy="50" r="42" 
                     fill="none" 
-                    stroke="#3b82f6" 
+                    stroke={chartStrokeColor} 
                     strokeWidth="8" 
                     strokeDasharray="264" 
-                    strokeDashoffset={264 - (264 * 78) / 100} 
+                    strokeDashoffset={264 - (264 * overallScore) / 100} 
                     className="transition-all duration-1000 ease-out"
                     strokeLinecap="round"
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-4xl font-bold text-white tracking-tight">78</span>
+                  <span className="text-4xl font-bold text-white tracking-tight">{overallScore}</span>
                   <span className="text-xs text-gray-400 font-medium mt-0.5">out of 100</span>
                 </div>
               </div>
@@ -84,49 +161,38 @@ const EvaluationScreen = () => {
               {/* Score Details */}
               <div className="flex-1 space-y-4 pt-1">
                 <div>
-                  <span className="inline-block px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 text-xs font-semibold mb-3 border border-blue-500/20">
-                    Strong Hire Signal
+                  <span className={`inline-block px-2.5 py-1 rounded-md text-xs font-semibold mb-3 border ${hireSignalColor}`}>
+                    {hireSignalText}
                   </span>
-                  <h2 className="text-xl font-bold text-white mb-2">You performed above average</h2>
+                  <h2 className="text-xl font-bold text-white mb-2">
+                    {isStrongHire ? "You performed above average" : (overallScore >= 50 ? "Solid effort with room to grow" : "Needs significant improvement")}
+                  </h2>
                   <p className="text-gray-400 text-sm leading-relaxed max-w-xl">
-                    Your problem-solving and communication were standout. Focus on edge cases and system design to reach the next tier.
+                    {report.full_report?.summary || "Your performance review summary will appear here once the evaluation is fully processed."}
                   </p>
-                </div>
-                
-                <div className="flex items-center gap-10 pt-5 border-t border-gray-800/60">
-                  <div>
-                    <div className="text-xl font-bold text-emerald-400">Top 22%</div>
-                    <div className="text-[11px] text-gray-500 mt-1 uppercase tracking-wider font-semibold">Percentile</div>
-                  </div>
-                  <div>
-                    <div className="text-xl font-bold text-white">6/6</div>
-                    <div className="text-[11px] text-gray-500 mt-1 uppercase tracking-wider font-semibold">Questions answered</div>
-                  </div>
-                  <div>
-                    <div className="text-xl font-bold text-white">14:32</div>
-                    <div className="text-[11px] text-gray-500 mt-1 uppercase tracking-wider font-semibold">Duration</div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Skill Breakdown */}
-          <div className="bg-[#111827] rounded-2xl p-6 md:p-8 border border-gray-800/60 shadow-lg">
-            <div className="mb-8">
-              <h3 className="text-base font-semibold text-white">Skill Breakdown</h3>
-              <p className="text-xs text-gray-400 mt-1.5 font-medium">Scored across six competency areas</p>
+          {Object.keys(categoryScores).length > 0 && (
+            <div className="bg-[#111827] rounded-2xl p-6 md:p-8 border border-gray-800/60 shadow-lg">
+              <div className="mb-8">
+                <h3 className="text-base font-semibold text-white">Skill Breakdown</h3>
+                <p className="text-xs text-gray-400 mt-1.5 font-medium">Scored across key competency areas</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-7">
+                {Object.entries(categoryScores).map(([key, score]) => {
+                  // e.g. "technical_depth" -> "Technical Depth"
+                  const title = key.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                  const color = score >= 80 ? "bg-emerald-500" : (score >= 65 ? "bg-blue-500" : "bg-red-500");
+                  return <SkillBar key={key} title={title} score={score} color={color} />;
+                })}
+              </div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-7">
-              <SkillBar title="Problem Solving" score={84} color="bg-emerald-500" />
-              <SkillBar title="Code Quality" score={79} color="bg-blue-500" />
-              <SkillBar title="Communication" score={88} color="bg-emerald-500" />
-              <SkillBar title="Time Complexity Analysis" score={72} color="bg-blue-500" />
-              <SkillBar title="Edge Case Handling" score={61} color="bg-red-500" />
-              <SkillBar title="System Design" score={66} color="bg-red-500" />
-            </div>
-          </div>
+          )}
 
           {/* Strengths & Improvements */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -139,18 +205,18 @@ const EvaluationScreen = () => {
                 </div>
                 <h3 className="text-sm font-semibold text-white">Key Strengths</h3>
               </div>
-              <ul className="space-y-4">
-                {[
-                  "Clear articulation of the hash-map approach before coding",
-                  "Optimal O(n) time complexity on the core challenge",
-                  "Readable, well-named variables and clean structure"
-                ].map((text, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-gray-300 items-start leading-relaxed">
-                    <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
-                    <span className="text-sm text-gray-300/90">{text}</span>
-                  </li>
-                ))}
-              </ul>
+              {strongAreas.length > 0 ? (
+                <ul className="space-y-4">
+                  {strongAreas.map((text, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-gray-300 items-start leading-relaxed">
+                      <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
+                      <span className="text-sm text-gray-300/90">{text}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-gray-500 italic">No specific strengths recorded.</p>
+              )}
             </div>
 
             {/* Areas to Improve */}
@@ -161,18 +227,18 @@ const EvaluationScreen = () => {
                 </div>
                 <h3 className="text-sm font-semibold text-white">Areas to Improve</h3>
               </div>
-              <ul className="space-y-4">
-                {[
-                  "Missed a duplicate-value edge case in the initial pass",
-                  "Hesitation when discussing space/time trade-offs",
-                  "System design answer lacked scalability considerations"
-                ].map((text, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-gray-300 items-start leading-relaxed">
-                    <Circle size={16} className="text-yellow-500 shrink-0 mt-0.5" />
-                    <span className="text-sm text-gray-300/90">{text}</span>
-                  </li>
-                ))}
-              </ul>
+              {improvementAreas.length > 0 ? (
+                <ul className="space-y-4">
+                  {improvementAreas.map((text, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-gray-300 items-start leading-relaxed">
+                      <Circle size={16} className="text-yellow-500 shrink-0 mt-0.5" />
+                      <span className="text-sm text-gray-300/90">{text}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-gray-500 italic">No specific areas to improve recorded.</p>
+              )}
             </div>
           </div>
           
@@ -189,57 +255,58 @@ const EvaluationScreen = () => {
             </div>
             <p className="text-xs text-gray-400 mb-6 font-medium">Personalized from your performance</p>
 
-            <div className="space-y-4">
-              
-              {/* Step 1 */}
-              <div className="relative p-4 rounded-xl border border-gray-700/50 bg-gray-800/30">
-                <div className="absolute -left-3 top-4 w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center border-[3px] border-[#111827]">
-                  1
-                </div>
-                <div className="pl-3">
-                  <div className="flex justify-between items-start mb-1.5 gap-2">
-                    <h4 className="text-sm font-semibold text-white leading-snug">Master edge-case driven testing</h4>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 font-medium whitespace-nowrap">Priority</span>
-                  </div>
-                  <p className="text-xs text-gray-400 leading-relaxed mt-2">
-                    Practice writing test cases before implementation. Focus on duplicates, empty inputs, and overflow.
-                  </p>
-                </div>
-              </div>
+            {recommendations.length > 0 ? (
+              <div className="space-y-4">
+                {recommendations.map((rec, i) => {
+                  const tagText = i === 0 ? "Priority" : (i === 1 ? "This week" : "Next up");
+                  const tagClasses = i === 0 
+                    ? "bg-blue-500/20 text-blue-400" 
+                    : "bg-gray-800 text-gray-400";
+                  
+                  const stepClasses = i === 0 
+                    ? "border-gray-700/50 bg-gray-800/30" 
+                    : "border-gray-800 bg-gray-800/10";
+                    
+                  const badgeClasses = i === 0
+                    ? "bg-blue-600 text-white border-[#111827]"
+                    : "bg-gray-700 text-gray-300 border-[#111827]";
+                    
+                  const titleClasses = i === 0
+                    ? "text-white"
+                    : "text-gray-200";
 
-              {/* Step 2 */}
-              <div className="relative p-4 rounded-xl border border-gray-800 bg-gray-800/10">
-                <div className="absolute -left-3 top-4 w-6 h-6 rounded-full bg-gray-700 text-gray-300 text-[11px] font-bold flex items-center justify-center border-[3px] border-[#111827]">
-                  2
-                </div>
-                <div className="pl-3">
-                  <div className="flex justify-between items-start mb-1.5 gap-2">
-                    <h4 className="text-sm font-semibold text-gray-200 leading-snug">Deep dive: Big-O trade-offs</h4>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-800 text-gray-400 font-medium whitespace-nowrap">This week</span>
-                  </div>
-                  <p className="text-xs text-gray-500 leading-relaxed mt-2">
-                    Review time vs. space trade-offs across common data structures with hands-on drills.
-                  </p>
-                </div>
-              </div>
+                  // Extracting a short title from the recommendation text if it has a colon
+                  let title = `Study Topic ${i + 1}`;
+                  let desc = rec;
+                  if (rec.includes(':')) {
+                    const parts = rec.split(':');
+                    title = parts[0];
+                    desc = parts.slice(1).join(':').trim();
+                  }
 
-              {/* Step 3 */}
-              <div className="relative p-4 rounded-xl border border-gray-800 bg-gray-800/10">
-                <div className="absolute -left-3 top-4 w-6 h-6 rounded-full bg-gray-700 text-gray-300 text-[11px] font-bold flex items-center justify-center border-[3px] border-[#111827]">
-                  3
-                </div>
-                <div className="pl-3">
-                  <div className="flex justify-between items-start mb-1.5 gap-2">
-                    <h4 className="text-sm font-semibold text-gray-200 leading-snug">System design fundamentals</h4>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-800 text-gray-400 font-medium whitespace-nowrap">Next up</span>
-                  </div>
-                  <p className="text-xs text-gray-500 leading-relaxed mt-2">
-                    Study horizontal scaling, caching layers, and load balancing with 3 mock designs.
-                  </p>
-                </div>
+                  return (
+                    <div key={i} className={`relative p-4 rounded-xl border ${stepClasses}`}>
+                      <div className={`absolute -left-3 top-4 w-6 h-6 rounded-full text-[11px] font-bold flex items-center justify-center border-[3px] ${badgeClasses}`}>
+                        {i + 1}
+                      </div>
+                      <div className="pl-3">
+                        <div className="flex justify-between items-start mb-1.5 gap-2">
+                          <h4 className={`text-sm font-semibold leading-snug ${titleClasses}`}>{title}</h4>
+                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${tagClasses}`}>
+                            {tagText}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-400 leading-relaxed mt-2">
+                          {desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-
-            </div>
+            ) : (
+              <p className="text-sm text-gray-500 italic">No recommendations available at this time.</p>
+            )}
 
             <button className="w-full mt-6 py-3 rounded-xl bg-[#1d4ed8]/10 hover:bg-[#1d4ed8]/20 text-blue-500 text-sm font-semibold transition-colors flex items-center justify-center gap-2 border border-blue-500/20">
               Generate full study plan <ArrowRight size={16} />
