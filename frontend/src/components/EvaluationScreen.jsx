@@ -182,7 +182,7 @@ const EvaluationScreen = () => {
             <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-medium border border-emerald-500/20 text-xs">
               <Award size={14} /> Completed
             </span>
-            <span className="text-gray-400 text-xs font-medium">Session ID: {activeSessionId ? activeSessionId.substring(0, 8) + '...' : ''}</span>
+            <span className="text-gray-400 text-xs font-medium">Session ID: {activeSessionId}</span>
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight">Performance Evaluation</h1>
         </div>
