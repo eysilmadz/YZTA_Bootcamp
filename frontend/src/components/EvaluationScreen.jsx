@@ -51,8 +51,8 @@ const EvaluationScreen = () => {
               const profileRes = await fetch(`${apiUrl}/api/v1/user/profile?email=${user.email}`);
               if (profileRes.ok) {
                 const profileData = await profileRes.json();
-                if (profileData.latest_session_id) {
-                  targetSessionId = profileData.latest_session_id;
+                if (profileData.recent_performances && profileData.recent_performances.length > 0) {
+                  targetSessionId = profileData.recent_performances[0].session_id;
                 }
               }
             }
