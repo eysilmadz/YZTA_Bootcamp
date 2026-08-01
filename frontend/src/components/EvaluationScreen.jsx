@@ -33,12 +33,13 @@ const EvaluationScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [noSession, setNoSession] = useState(false);
+  const [notCompleted, setNotCompleted] = useState(false);
   const [activeSessionId, setActiveSessionId] = useState(sessionId);
 
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const apiUrl = 'https://yzta-bootcamp-ttfy.onrender.com';
         let targetSessionId = sessionId;
 
         // If no sessionId in URL, try to get the latest one for the user
@@ -70,6 +71,11 @@ const EvaluationScreen = () => {
         // Fetch the report for the targetSessionId
         const response = await fetch(`${apiUrl}/api/v1/interview/report/${targetSessionId}`);
         if (!response.ok) {
+          if (response.status === 404) {
+            setNotCompleted(true);
+            setLoading(false);
+            return;
+          }
           throw new Error('Failed to fetch evaluation report');
         }
         const data = await response.json();
@@ -92,6 +98,26 @@ const EvaluationScreen = () => {
           <Loader2 className="animate-spin text-blue-500" size={48} />
           <p className="text-gray-400 font-medium text-sm">Analyzing interview performance...</p>
         </div>
+      </div>
+    );
+  }
+
+  if (notCompleted) {
+    return (
+      <div className="min-h-full flex flex-col items-center justify-center p-6 py-24 space-y-4">
+        <div className="p-4 bg-yellow-500/10 rounded-full text-yellow-500 mb-2">
+          <AlertTriangle size={48} />
+        </div>
+        <h2 className="text-xl font-bold text-white text-center">Rapor Henüz Hazır Değil</h2>
+        <p className="text-gray-400 text-sm text-center max-w-md">
+          Bu mülakat henüz tamamlanmadığı için rapor oluşturulmamış. Lütfen mülakatı sonlandırın.
+        </p>
+        <Link 
+          to="/"
+          className="mt-6 px-6 py-2.5 bg-[#111827] border border-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium flex items-center gap-2"
+        >
+          Go to Dashboard <ArrowRight size={16} />
+        </Link>
       </div>
     );
   }
