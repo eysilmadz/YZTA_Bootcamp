@@ -184,7 +184,7 @@ const Dashboard = () => {
   };
 
   return (
-    <main className="flex-1 bg-[#0b0f19] text-gray-200 p-8 overflow-y-auto custom-scrollbar">
+    <main className="flex-1 bg-[#0b0f19] text-gray-200 p-4 md:p-8 overflow-y-auto custom-scrollbar">
       
       {/* Welcome Header */}
       <div className="mb-8">
@@ -192,7 +192,7 @@ const Dashboard = () => {
           <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
           AI-Hire Coach Dashboard
         </div>
-        <h1 className="text-3xl font-bold mb-2 tracking-tight">Hoş Geldiniz, {user?.name || "Aday"}</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 tracking-tight break-words">Hoş Geldiniz, {user?.name || "Aday"}</h1>
         <p className="text-gray-400 text-sm max-w-2xl">
           Mülakata girmek istediğiniz özgeçmişinizi aşağıdan yönetebilir, PDF CV yükleyerek yapay zeka analizini anında başlatabilirsiniz.
         </p>
@@ -258,7 +258,7 @@ const Dashboard = () => {
 
             {/* Dropzone Card */}
             <div 
-              className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group ${
+              className={`border-2 border-dashed rounded-xl p-5 sm:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group ${
                 isDragging 
                   ? 'border-blue-500 bg-blue-500/10' 
                   : 'border-gray-700 hover:border-blue-500/50 bg-[#0b0f19]/50'
@@ -370,7 +370,7 @@ const Dashboard = () => {
         <div className="lg:col-span-1 space-y-6">
           
           {/* Stats Grid */}
-          <div className="grid grid-cols-3 gap-3 select-none">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 select-none">
             <div className="bg-[#111827] border border-gray-800/60 rounded-2xl p-4 flex flex-col justify-between shadow-xl shadow-black/20">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-8 h-8 rounded-full bg-blue-900/20 flex items-center justify-center text-blue-400">

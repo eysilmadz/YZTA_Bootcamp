@@ -35,6 +35,7 @@ SCORING_CRITERIA = {
             "30-49":  "Büyük ölçüde hatalı ya da yanlış yönde",
             "0-29":   "Cevap yok, konuyu bilmiyor ya da alakasız cevap verdi",
         },
+        "no_answer_note": "Aday cevap vermediyse veya 'bilmiyorum' dediyse maksimum 20 puan ver",
     },
     "problem_solving": {
         "weight": 0.30,
@@ -46,6 +47,7 @@ SCORING_CRITERIA = {
             "30-49":  "Problemi anlama güçlüğü çekiyor, çözüm rastgele",
             "0-29":   "Problemi çözemiyor ya da denemede bulunmuyor",
         },
+        "no_answer_note": "Aday cevap vermediyse veya 'bilmiyorum' dediyse maksimum 20 puan ver",
     },
     "communication": {
         "weight": 0.15,
@@ -57,6 +59,7 @@ SCORING_CRITERIA = {
             "30-49":  "Anlaşılması güç, tutarsız açıklamalar",
             "0-29":   "İfade çok zayıf veya cevap vermiyor",
         },
+        "no_answer_note": "Aday cevap vermediyse veya 'bilmiyorum' dediyse maksimum 20 puan ver",
     },
     "adaptability": {
         "weight": 0.15,
@@ -68,6 +71,7 @@ SCORING_CRITERIA = {
             "30-49":  "Yönlendirmelere rağmen aynı yerde kaldı",
             "0-29":   "Yönlendirmelere hiç uyum sağlamadı",
         },
+        "no_answer_note": "Aday cevap vermediyse veya 'bilmiyorum' dediyse maksimum 20 puan ver",
     },
 }
 
@@ -129,10 +133,20 @@ adayı 100 üzerinden puanlamalı ve detaylı bir değerlendirme raporu oluştur
    "asyncio dökümanını oku ve 2 küçük async proje yaz" gibi)
 5. Rapor Türkçe olmalı
 
-## Çıktı Formatı
-Yanıtını YALNIZCA geçerli bir JSON nesnesi olarak ver.
-Başında veya sonunda hiçbir açıklama, markdown bloğu veya ek metin olmamalı.
-JSON şeması aşağıda tanımlıdır — her alan zorunludur.
+## Tutarlılık Kuralları
+1. Aynı konuyu hem "güçlü" hem "zayıf" olarak işaretleme
+2. Birden fazla soruda aynı yorum cümlesini tekrarlama
+3. Puanı 50 altında verdiğin bir konuyu "gelişim önerisi" olmadan bırakma
+4. Adayın hiç cevap vermediği bir konuya 70+ puan verme
+5. "çok iyi", "harika", "mükemmel" gibi boş övgü kelimelerini kullanma — bunların yerine somut gözlem yaz
+
+## Kritik: Çıktı Formatı
+- Yanıtın ilk karakteri {{ olmalı, son karakteri }} olmalı
+- Markdown code block kullanma (``` işareti koyma)
+- JSON içinde string değerlerde çift tırnak kullan, tek tırnak değil
+- Sayısal değerler tırnak içinde olmasın: 78.5 doğru, "78.5" yanlış
+- Yanıtını YALNIZCA geçerli bir JSON nesnesi olarak ver; başında veya sonunda hiçbir açıklama veya ek metin olmamalı
+- JSON şeması aşağıda tanımlıdır — her alan zorunludur
 """
 
 
@@ -170,6 +184,15 @@ def build_evaluator_user_prompt(
 
 ## Mülakat Konuşma Geçmişi
 {chat_log}
+
+## Değerlendirme Öncesi Kontrol Listesi
+Rapora başlamadan önce şunları say ve belirt:
+- Toplam kaç soru soruldu?
+- Kaç soruya tam cevap verildi?
+- Kaç soruya kısmi cevap verildi?
+- Kaç soruya cevap verilmedi?
+
+Bu sayımı full_report.summary'nin başına ekle.
 
 ## Talimat
 Yukarıdaki konuşma geçmişini değerlendir ve aşağıdaki JSON şemasına uygun bir rapor üret.

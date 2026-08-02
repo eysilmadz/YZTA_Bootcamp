@@ -173,7 +173,7 @@ const EvaluationScreen = () => {
   const recommendations = report.full_report?.recommendations || [];
 
   return (
-    <div className="min-h-full p-6 md:p-8 max-w-[1400px] mx-auto space-y-6">
+    <div className="min-h-full p-4 md:p-8 max-w-[1400px] mx-auto space-y-6 overflow-x-hidden">
       
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -186,7 +186,7 @@ const EvaluationScreen = () => {
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight">Performance Evaluation</h1>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <button className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm text-gray-300 bg-[#111827] border border-gray-700 hover:bg-gray-800 transition-colors">
             <Download size={16} />
             Export PDF

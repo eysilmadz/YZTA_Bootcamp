@@ -477,10 +477,10 @@ const TechnicalInterviewScreen = () => {
   const lineNumbers = Array.from({ length: Math.max(lineCount, 21) }, (_, i) => i + 1);
 
   return (
-    <div className="flex h-full w-full bg-[#090b14] text-white font-sans overflow-hidden">
-      
+    <div className="flex flex-col md:flex-row h-full w-full bg-[#090b14] text-white font-sans overflow-hidden">
+
       {/* LEFT PANEL: Chat Flow */}
-      <div className="w-1/2 flex flex-col border-r border-[#1e2335] bg-[#0d111d]">
+      <div className="w-full md:w-1/2 flex flex-col border-b md:border-b-0 md:border-r border-[#1e2335] bg-[#0d111d] min-h-0">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#1e2335] bg-[#0f1322]">
           <div className="flex items-center gap-4">
@@ -514,7 +514,7 @@ const TechnicalInterviewScreen = () => {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar min-h-0">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center h-full gap-3">
               <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
@@ -676,7 +676,7 @@ const TechnicalInterviewScreen = () => {
       </div>
 
       {/* RIGHT PANEL: Code Editor OR IK Scorecard */}
-      <div className="w-1/2 flex flex-col bg-[#0b0e17] relative">
+      <div className="hidden md:flex w-full md:w-1/2 flex-col bg-[#0b0e17] relative">
         {report ? (
           /* IK REPORT LAYOUT */
           <div className="flex-1 flex flex-col overflow-y-auto p-8 custom-scrollbar">

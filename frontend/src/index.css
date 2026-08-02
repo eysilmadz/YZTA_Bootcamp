@@ -2,9 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Breakpoints (Tailwind defaults — mobil öncelikli):
+ * sm:  640px+  → küçük ekranlar
+ * md:  768px+  → tablet
+ * lg:  1024px+ → masaüstü
+ * xl:  1280px+
+ */
+
 @layer base {
   body {
     @apply bg-slateBg text-white;
+  }
+
+  /* Dokunmatik hedefler için minimum yükseklik */
+  button, a[role="button"] {
+    min-height: 36px;
   }
 }
 
