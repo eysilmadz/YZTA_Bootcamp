@@ -1,12 +1,16 @@
 <html>
 <body>
 
+<h1 align="center"><b>TAKIM 113</b></h1>
+<br><br>
+
 <p align="center">
   <img src="./assets/logo.png" alt="AI-Hire Coach Logo" width="180"/>
 </p>
 
 <h1 align="center"><b>AI-Hire Coach</b></h1>
 
+<h4>Web Site Link:</h4><h6>https://yzta-bootcamp-seven.vercel.app/login</h6> 
 
 <h3>🎯 What is the Project?</h3>
 We analyze the PDF CV uploaded by the user using local NLP processes to extract their skills (tech stack, years of experience, etc.). Then, through AI agents configured with LangChain/CrewAI, we conduct a personalized, interactive technical interview simulation based on this information. At the end of the interview, the Evaluation Agent scores the candidate and provides a report outlining their deficiencies and development suggestions.
@@ -257,28 +261,28 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
     <img src="./assets/render.png" style="max-width: 100%; height: auto;" alt="Render Deployment Screen">
     <br><br>
     <h4>Live DB - Neon (Backend Production)</h4>
-    <img src="./assets/neon.png" style="max-width: 100%; height: auto;" alt="Render Deployment Screen">
+    <img src="./assets/neon.png" style="max-width: 100%; height: auto;" alt="Neon Deployment Screen">
     <br><br>
     <h4>Live Web Site - Login Page</h4>
-    <img src="./assets/login.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <img src="./assets/login.png" style="max-width: 100%; height: auto;" alt="Web Responsive Screen">
     <br><br>
     <h4>Live Web Site - Register Page</h4>
-    <img src="./assets/register.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <img src="./assets/register.png" style="max-width: 100%; height: auto;" alt="Web Responsive Screen">
     <br><br>
     <h4>Live Web Site - Dashboard Page</h4>
-    <img src="./assets/dashboard.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <img src="./assets/dashboard3.png" style="max-width: 100%; height: auto;" alt="Web Responsive Screen">
     <br><br>
     <h4>Live Web Site - Live Interview Page</h4>
-    <img src="./assets/liveinterview.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <img src="./assets/liveinterview.png" style="max-width: 100%; height: auto;" alt="Web Responsive Screen">
     <br><br>
     <h4>Live Web Site - Report Page</h4>
-    <img src="./assets/report.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <img src="./assets/report.png" style="max-width: 100%; height: auto;" alt="Web Responsive Screen">
     <br><br>
-    <h4>Live Web Site - Evaulation Page</h4>
-    <img src="./assets/evaulation.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <h4>Live Web Site - Evaluation Page</h4>
+    <img src="./assets/evaluation3.png" style="max-width: 100%; height: auto;" alt="Web Responsive Screen">
     <br><br>
     <h4> Swagger UI </h4>
-    <img src="./assets/docs.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <img src="./assets/docs.png" style="max-width: 100%; height: auto;" alt="Web Responsive Screen">
   </details>
   
   <details>
@@ -296,26 +300,42 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
 
 </details>
 
+---
 
-<!--
 ## 🎨 Brand Color Reference (Core Dark Theme)
 
 | Theme Component | Hex | Visual Preview |
 | :--- | :--- | :--- |
-| Primary Accent (Buttons & Active) | `#A855F7` | ![#A855F7](https://via.placeholder.com/15/A855F7?text=+) |
-| Secondary Accent (Highlights) | `#06B6D4` | ![#06B6D4](https://via.placeholder.com/15/06B6D4?text=+) |
-| Deep Background (Dark Slate) | `#0B0F19` | ![#0B0F19](https://via.placeholder.com/15/0B0F19?text=+) |
+| Primary Accent (Buttons & Active) | `#2563EB` | ![#2563EB](https://via.placeholder.com/15/2563eb?text=+) |
+| Success & Highlights (Emerald) | `#10B981` | ![#10B981](https://via.placeholder.com/15/10b981?text=+) |
+| Deep Background (Dark Slate) | `#0B0F19` | ![#0B0F19](https://via.placeholder.com/15/0b0f19?text=+) |
+| Card & Panel Background | `#111827` | ![#111827](https://via.placeholder.com/15/111827?text=+) |
 
 ---
 
 ## 🛠️ Selected Technologies & Core Libraries
-- [x] `FastAPI` (High-performance Python Web Framework)
-- [x] `LangChain` / `CrewAI` (Multi-Agent AI Orchestration)
+
+**Frontend:**
 - [x] `React.js` (Frontend UI Engine)
-- [x] `Redux Toolkit` (Predictable Global State Container)
+- [x] `Tailwind CSS` (Utility-first Styling & Design System)
 - [x] `@monaco-editor/react` (Embedded Live Code Editor)
+- [x] `lucide-react` (Modern Iconography)
+
+**Backend & Database:**
+- [x] `FastAPI` (High-performance Python Web Framework)
+- [x] `PostgreSQL` & `SQLAlchemy` (Relational Database & ORM)
+
+**AI & Multi-Agent System:**
+- [x] `LangChain` (Multi-Agent AI Orchestration)
+- [x] `Google Gemini API` (1.5 Flash & 2.5 Pro for CV Analysis & Evaluation)
+- [x] `Groq API` (Llama 3 for Ultra-low Latency Live Interviewing)
 - [x] `pdfplumber` (Local NLP Resume Data Extraction)
--->
+
+**DevOps & Deployment:**
+- [x] `Vercel` (Frontend Hosting & Global CDN)
+- [x] `Render` (Backend Hosting)
+- [x] `GitHub Actions` (CI/CD Automated Deployment Pipelines)
+
 </body>
 </html>
 
