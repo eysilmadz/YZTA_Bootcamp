@@ -86,9 +86,9 @@ Our project operates with 3 core AI agents, each specialized in distinct domains
 
   ### Backlog Structure & Story Selection
   As the initial phase of the project, the Product Backlog was established, and the first sprint was designated as the "Research, Selection, and Architecture Boilerplate" phase. User Stories were selected and prioritized using Story Points (SP):
-  * **Story 1 (Technology & Framework Selections):** As a Scrum Master/Developer, I want to finalize the project's LLM and Agent orchestration infrastructure (LangChain vs. CrewAI, Groq vs. Gemini) so that we can transition into the development phase with alignment. *(Estimation: 3 SP)*
-  * **Story 2 (Database Design & Memory Planning):** As a Product Owner, I want to design a relational DB schema to store conversation logs efficiently to optimize free API token limits. *(Estimation: 5 SP)*
-  * **Story 3 (UI Mockups & Wireframes):** As a user, I want to see a wireframe layout of the screens to comprehend the end-to-end interview simulation flow. *(Estimation: 5 SP)*
+  * **Story 1 (Technology & Framework Selections):** As a Scrum Master/Developer, I want to finalize the project's LLM and Agent orchestration infrastructure (LangChain vs. CrewAI, Groq vs. Gemini) so that we can transition into the development phase with alignment. 
+  * **Story 2 (Database Design & Memory Planning):** As a Product Owner, I want to design a relational DB schema to store conversation logs efficiently to optimize free API token limits.
+  * **Story 3 (UI Mockups & Wireframes):** As a user, I want to see a wireframe layout of the screens to comprehend the end-to-end interview simulation flow. 
 
   ### Daily Scrum
   Throughout the planning week, the team conducted sync meetings twice a week over Slack to maintain alignment and address ongoing tasks.
@@ -186,7 +186,7 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
   | **Evaluation Agent** | Designing scoring weights and prompt matrix configurations to detect technical gaps | Esra Bayrakcı | ⏳ In Progress |
   | **Evaluation Agent** | Mapping AI reporting configurations to output structured blocks (scores, strengths, improvements) | Esra Bayrakcı | ⏳ In Progress |
   | **Backend API** | Creating the reporting route (`/interview/report`) and developing PDF/HTML rendering modules | Esra Bayrakcı | ⏳ In Progress |
-  | **Integration** | Executing full End-to-End connectivity checks: Combining CV Ingestion ➡️ Chat ➡️ Report chain | **Everyone Together** 🤝 | ⏳ In Progress |
+  | **Integration** | Executing full End-to-End connectivity checks: Combining CV Ingestion ➡️ Chat ➡️ Report chain | **Everyone Together** | ⏳ In Progress |
 
   <details>
     <summary><h3>Sprint 2 - Trello Screenshots</h3></summary>
@@ -215,15 +215,89 @@ At the conclusion of Sprint 1, all theoretical foundations of the project were s
 
 </details>
 
-<!--
-
 <details>
-<summary><b>🔒 Sprint 3</b></summary>
-<br>
-<i>Bu sprint henüz başlamadı.</i>
+  <summary><b>Sprint 3</b></summary>
+
+  ### 📌 Sprint Goals
+  Our primary goal in the final sprint is optimization, quality assurance, and deployment. We focus on refining AI prompts, optimizing backend API limits with caching, polishing the UI for mobile responsiveness, ensuring security, and deploying the complete application to live environments (Vercel and Render) using automated CI/CD pipelines.
+
+  ### Backlog Structure & Story Selection
+  As the concluding phase of the project, the Product Backlog was focused on live production readiness, bug hunting, and final delivery:
+  * **Story 1 (Deployment & CI/CD):** As a DevOps engineer, I want to deploy the Frontend to Vercel and Backend to Render, and configure GitHub Actions for CI/CD so that the application is accessible globally and updates automatically.
+  * **Story 2 (QA & Optimization):** As a Product Owner, I want to conduct comprehensive testing with diverse CVs, hunt bugs, and implement prompt/caching optimizations so that the application is stable and cost-effective in production.
+  * **Story 3 (UI Polishing & Security):** As a user, I want a fully responsive interface across all devices and secure file upload validations to ensure a safe and professional experience. 
+
+  ### Daily Scrum & Synchronization
+  * **Meeting Frequency:** The team maintained daily active communication over Slack and Discord to coordinate the deployment process and instantly resolve integration bugs found during the QA phase.
+  * **Current Status & Blocker Resolution:** Previously *In Progress* tasks from Sprint 2 (Lifecycle endpoints, Evaluation Agent logic, and Reporting routes) were successfully completed at the start of this sprint. The team successfully resolved CORS issues and environment variable configurations during the Vercel/Render deployment phase. All tasks for Sprint 3 have been officially completed and moved to the "Done" list.
+
+  ### Sprint Tasks & Status Table
+
+  | Field of Work | Task | Assignee | Status |
+  | :--- | :--- | :--- | :--- |
+  | **QA & Testing** | Comprehensive End-to-End testing with diverse CVs (varying tech stacks) | Nur Sima Akgül | ✅ Done |
+  | **QA & Testing** | Bug hunting, prioritizing issues, and re-testing fixes | Nur Sima Akgül | ✅ Done |
+  | **Frontend** | UI polishing and ensuring mobile responsiveness across all screens | Nur Sima Akgül, Esra Bayrakcı | ✅ Done |
+  | **Multi-Agent** | Prompt optimization: ensuring more consistent questions and higher quality evaluations | Esra Bayrakcı | ✅ Done |
+  | **Backend API** | Reducing request overhead (concise prompts, basic caching) to optimize free-tier LLM limits | Esra Bayrakcı | ✅ Done |
+  | **Security & QA** | Implementing file upload security and basic backend security validations | Esra Bayrakcı | ✅ Done |
+  | **DevOps** | Deploying Backend (Render) and Frontend (Vercel) to free hosting, configuring environment variables | Esma Yıldız | ✅ Done |
+  | **DevOps** | Setting up automated deployment pipelines (CI/CD) via GitHub Actions | Esma Yıldız | ✅ Done |
+  | **QA & Testing** | Final smoke testing on the live production environment | Nur Sima Akgül | ✅ Done |
+  | **Project Management** | Final demo/presentation preparation and writing the README/User Manual | Esma Yıldız | ✅ Done |
+  | **Integration** | Final Demo & Team Closing Retrospective (What we did well, what we learned) | **Everyone Together** | ✅ Done |
+
+  <details>
+    <summary><h3>Sprint 3 - Web Site & Deployment Screenshots</h3></summary>
+    <br>
+    <h4>Live Application - Vercel (Frontend Production)</h4>
+    <img src="./assets/vercel.png" style="max-width: 100%; height: auto;" alt="Vercel Deployment Screen">
+    <br><br>
+    <h4>Live API - Render (Backend Production)</h4>
+    <img src="./assets/render.png" style="max-width: 100%; height: auto;" alt="Render Deployment Screen">
+    <br><br>
+    <h4>Live DB - Neon (Backend Production)</h4>
+    <img src="./assets/neon.png" style="max-width: 100%; height: auto;" alt="Render Deployment Screen">
+    <br><br>
+    <h4>Live Web Site - Login Page</h4>
+    <img src="./assets/login.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <br><br>
+    <h4>Live Web Site - Register Page</h4>
+    <img src="./assets/register.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <br><br>
+    <h4>Live Web Site - Dashboard Page</h4>
+    <img src="./assets/dashboard.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <br><br>
+    <h4>Live Web Site - Live Interview Page</h4>
+    <img src="./assets/liveinterview.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <br><br>
+    <h4>Live Web Site - Report Page</h4>
+    <img src="./assets/report.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <br><br>
+    <h4>Live Web Site - Evaulation Page</h4>
+    <img src="./assets/evaulation.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+    <br><br>
+    <h4> Swagger UI </h4>
+    <img src="./assets/docs.png" style="max-width: 100%; height: auto;" alt="Mobile Responsive Screen">
+  </details>
+  
+  <details>
+    <summary><h3>Sprint 3 - Trello Screenshots</h3></summary>
+    <img src="./assets/trello3.png" style="max-width: 100%; height: auto;" alt="Sprint 3 Trello Board Status">
+  </details>
+
+  ### Sprint Review
+  Sprint 3 marked the successful conclusion of the AI-Hire Coach project. The application is now fully deployed and accessible via the web. The integration of Vercel and Render works seamlessly, backed by GitHub Actions for continuous delivery. Prompt engineering optimizations significantly reduced response times and token costs. The UI is polished, responsive, and ready for end-users.
+
+  ### Sprint Retro
+  * **What Went Well:** The deployment phase was handled systematically. Collaborative bug hunting sessions allowed us to catch and fix critical edge cases in the PDF parser and AI hallucination guardrails quickly before live deployment.
+  * **What Can Be Improved:** In the future, implementing comprehensive unit and integration tests earlier in the development cycle would reduce the manual QA burden during the final sprint.
+  * **Conclusion:** Building a multi-agent orchestrated application was a challenging but highly rewarding experience. The team successfully delivered a full-stack, AI-powered SaaS product from scratch within the planned 3-sprint timeframe.
+
 </details>
 
----
+
+<!--
 ## 🎨 Brand Color Reference (Core Dark Theme)
 
 | Theme Component | Hex | Visual Preview |
